@@ -14,4 +14,6 @@ resources:
       parameters:
         - name: env
           default: dev
+        - name: catalog
+          default: ${var.catalog_in_use}
       performance_target: PERFORMANCE_OPTIMIZED
