@@ -5,7 +5,7 @@ resources:
       tasks:        
         - task_key: ext_location_setup
           notebook_task:
-            notebook_path: ../src/notebooks/setup/00-setup
+            notebook_path: ../src/notebooks/setup/00-setup.ipynb
             source: WORKSPACE
         - task_key: Check_env_name
           depends_on:
@@ -19,14 +19,14 @@ resources:
             - task_key: Check_env_name
               outcome: "true"
           notebook_task:
-            notebook_path: ../src/notebooks/setup/01-schema-setup-dev
+            notebook_path: ../src/notebooks/setup/01-schema-setup-dev.ipynb
             source: WORKSPACE
         - task_key: set_ext_location_stg
           depends_on:
             - task_key: Check_env_name
               outcome: "false"
           notebook_task:
-            notebook_path: ../src/notebooks/setup/01-schema-setup-stg
+            notebook_path: ../src/notebooks/setup/01-schema-setup-stg.ipynb
             source: WORKSPACE
       queue:
         enabled: true
