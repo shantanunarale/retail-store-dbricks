@@ -1,0 +1,41 @@
+# Databricks Asset Bundle configuration, more info here: https://docs.databricks.com/en/dev-tools/bundles/settings.html
+bundle:
+  name: "retail_store"
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+  - variables/*.yml
+
+variables:
+  catalog_in_use:
+    default: "${var.catalog_dev}"
+    description: Dev Catalog
+
+targets:
+  # The 'dev' target, for development purposes. This target is the default.
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-7405609973100104.4.azuredatabricks.net
+    run_as:
+      service_principal_name: 35ce9b21-cbf4-4ef4-a672-b3c0c8d14b45
+    variables:
+      catalog_in_use: "${var.catalog_dev}"
+      env: "dev"
+
+  # The 'prod' target, used for production deployment.
+  stg:
+    mode: production
+    presets:
+      name_prefix: "stg_"
+    workspace:
+      host: https://adb-7405610455760442.2.azuredatabricks.net
+      # We always use /Users/dev-user@shantanunarale061gmail.onmicrosoft.com for all resources to make sure we only have a single copy.
+      root_path: /retail_store/${bundle.name}/${bundle.target}
+    run_as:
+      service_principal_name: 844a8a0f-aa4d-4a8f-b5d5-2dddb949dadb
+    variables:
+      catalog_in_use: "${var.catalog_stage}"
+      env: "test"

@@ -1,0 +1,38 @@
+resources:
+  jobs:
+    one_time_ext_setup:
+      name: one-time-ext-setup      
+      tasks:        
+        - task_key: ext_location_setup
+          notebook_task:
+            notebook_path: ../src/notebooks/setup/00-setup.ipynb
+            source: WORKSPACE
+        - task_key: Check_env_name
+          depends_on:
+            - task_key: ext_location_setup
+          condition_task:
+            op: EQUAL_TO
+            left: "{{job.parameters.env}}"
+            right: dev
+        - task_key: setup_ext_location_dev
+          depends_on:
+            - task_key: Check_env_name
+              outcome: "true"
+          notebook_task:
+            notebook_path: ../src/notebooks/setup/01-schema-setup-dev.ipynb
+            source: WORKSPACE
+        - task_key: set_ext_location_stg
+          depends_on:
+            - task_key: Check_env_name
+              outcome: "false"
+          notebook_task:
+            notebook_path: ../src/notebooks/setup/01-schema-setup-stg.ipynb
+            source: WORKSPACE
+      queue:
+        enabled: true
+      parameters:
+        - name: env
+          default: ${var.env}
+        - name: catalog
+          default: ${var.catalog_in_use}
+      performance_target: PERFORMANCE_OPTIMIZED

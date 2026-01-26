@@ -1,0 +1,12 @@
+variables:
+  catalog_dev:
+    default: retail_store_dev
+    description: Dev Catalog
+
+  catalog_stage:
+    default: retail_store_stg
+    description: Dev Catalog
+
+  env:
+    default: dev
+    description: Env to use
