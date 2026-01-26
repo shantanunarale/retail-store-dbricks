@@ -6,7 +6,3 @@ variables:
   catalog_stage:
     default: retail_store_stg
     description: Dev Catalog
-
-  catalog_in_use:
-    default: ${var.catalog_dev}
-    description: Selected Catalog

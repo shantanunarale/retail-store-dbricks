@@ -1,9 +1,7 @@
 resources:
   jobs:
     one_time_ext_setup:
-      name: one-time-ext-setup
-      run_as:
-        service_principal_name: 35ce9b21-cbf4-4ef4-a672-b3c0c8d14b45
+      name: one-time-ext-setup      
       tasks:
         - task_key: ext_location_setup
           notebook_task:

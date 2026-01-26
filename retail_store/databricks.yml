@@ -5,6 +5,12 @@ bundle:
 include:
   - resources/*.yml
   - resources/*/*.yml
+  - variables/*.yml
+
+variables:
+  catalog_in_use:
+    default: "${var.catalog_dev}"
+    description: Dev Catalog
 
 targets:
   # The 'dev' target, for development purposes. This target is the default.
@@ -16,7 +22,7 @@ targets:
     run_as:
       service_principal_name: 35ce9b21-cbf4-4ef4-a672-b3c0c8d14b45
     variables:
-      catalog_in_use: ${var.catalog_dev}
+      catalog_in_use: "${var.catalog_dev}"
 
   # The 'prod' target, used for production deployment.
   stg:
@@ -28,4 +34,4 @@ targets:
     run_as:
       service_principal_name: 844a8a0f-aa4d-4a8f-b5d5-2dddb949dadb
     variables:
-      catalog_in_use: ${var.catalog_stg}
+      catalog_in_use: "${var.catalog_stg}"
