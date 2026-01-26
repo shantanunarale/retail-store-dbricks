@@ -10,3 +10,8 @@ variables:
   env:
     default: dev
     description: Env to use
+
+  sql_warehouse:
+    lookup:
+      warehouse: 'de_warehouse'
+
