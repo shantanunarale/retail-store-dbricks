@@ -13,15 +13,19 @@ targets:
     default: true
     workspace:
       host: https://adb-7405609973100104.4.azuredatabricks.net
+    run_as:
+      service_principal_name: 35ce9b21-cbf4-4ef4-a672-b3c0c8d14b45
+    variables:
+      catalog_in_use: ${var.catalog_dev}
 
   # The 'prod' target, used for production deployment.
-  prod:
+  stg:
     mode: production
     workspace:
       host: https://adb-7405609973100104.4.azuredatabricks.net
       # We always use /Users/dev-user@shantanunarale061gmail.onmicrosoft.com for all resources to make sure we only have a single copy.
-      root_path: /Users/dev-user@shantanunarale061gmail.onmicrosoft.com/.bundle/${bundle.name}/${bundle.target}
+      root_path: /Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
     run_as:
-      # This runs as dev-user@shantanunarale061gmail.onmicrosoft.com in production. We could also use a service principal here,
-      # see https://docs.databricks.com/dev-tools/bundles/permissions.html.
-      service_principal_name: 35ce9b21-cbf4-4ef4-a672-b3c0c8d14b45
+      service_principal_name: 844a8a0f-aa4d-4a8f-b5d5-2dddb949dadb
+    variables:
+      catalog_in_use: ${var.catalog_stg}
