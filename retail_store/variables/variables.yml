@@ -6,3 +6,7 @@ variables:
   catalog_stage:
     default: retail_store_stg
     description: Dev Catalog
+
+  env:
+    default: dev
+    description: Env to use

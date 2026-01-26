@@ -32,7 +32,7 @@ resources:
         enabled: true
       parameters:
         - name: env
-          default: dev
+          default: ${var.env}
         - name: catalog
           default: ${var.catalog_in_use}
       performance_target: PERFORMANCE_OPTIMIZED
