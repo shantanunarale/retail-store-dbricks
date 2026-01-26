@@ -7,24 +7,11 @@ resources:
       tasks:
         - task_key: ext_location_setup
           notebook_task:
-            notebook_path: /Workspace/Users/dev-user@shantanunarale061gmail.onmicrosoft.com/retail-store-dbricks/retail_store/src/notebooks/setup/00-setup
+            notebook_path: ../src/notebooks/setup/00-setup.ipynb
             source: WORKSPACE
       queue:
         enabled: true
       parameters:
         - name: env
           default: dev
-      performance_target: PERFORMANCE_OPTIMIZED        
-
-      # tasks:
-      #   - task_key: notebook_task
-      #     notebook_task:
-      #       notebook_path: ../path/to/notebook.ipynb
-      # email_notifications:
-      #   on_failure:
-      #     - dev-user@shantanunarale061gmail.onmicrosoft.com
-      # trigger:
-      #   # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
-      #   periodic:
-      #     interval: 1
-      #     unit: DAYS
+      performance_target: PERFORMANCE_OPTIMIZED
