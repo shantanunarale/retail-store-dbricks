@@ -1,0 +1,90 @@
+resources:
+  jobs:
+    medallion_refresh:
+      name: medallion_refresh
+      schedule:
+        quartz_cron_expression: 0 0 * L * ?
+        timezone_id: Asia/Calcutta
+        pause_status: PAUSED
+      tasks:
+        - task_key: bronze_emp
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/employee_store/00-raw-ingestion-employees.ipynb
+            source: WORKSPACE
+          environment_key: bronze_emp_environment
+        - task_key: bronze_orders
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/orders/00-bronze-order-processing.ipynb
+            source: WORKSPACE
+        - task_key: bronze_products
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/products/00-raw-ingestion-products.ipynb
+            source: WORKSPACE
+        - task_key: bronze_store
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/employee_store/00-raw-ingestion-stores.ipynb
+            source: WORKSPACE
+        - task_key: refresh_stores
+          depends_on:
+            - task_key: bronze_store
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/employee_store/01-silver-refresh-stores.ipynb
+            source: WORKSPACE
+        - task_key: silver_emp
+          depends_on:
+            - task_key: bronze_emp
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/employee_store/01-silver-refresh-employees.ipynb
+            source: WORKSPACE
+        - task_key: silver_em_store
+          depends_on:
+            - task_key: refresh_stores
+            - task_key: silver_emp
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/employee_store/02-silver-refresh-emp-stores.ipynb
+            source: WORKSPACE
+          email_notifications:
+            on_success:
+              - shantanunarale061@gmail.com
+            on_failure:
+              - shantanunarale061@gmail.com
+        - task_key: silver_orders
+          depends_on:
+            - task_key: bronze_orders
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/orders/01-Silver-Order-Processing.ipynb
+            source: WORKSPACE
+        - task_key: silver_products
+          depends_on:
+            - task_key: bronze_products
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/products/02-silver-processing.ipynb
+            source: WORKSPACE
+        - task_key: gold_process
+          depends_on:
+            - task_key: silver_orders
+            - task_key: silver_products
+            - task_key: silver_em_store
+          notebook_task:
+            notebook_path: ../src/notebooks/data_pipeline/gold/gold_processing.ipynb
+            source: WORKSPACE
+          health:
+            rules:
+              - metric: RUN_DURATION_SECONDS
+                op: GREATER_THAN
+                value: 120
+          email_notifications:
+            on_success:
+              - shantanunarale061@gmail.com
+            on_failure:
+              - shantanunarale061@gmail.com
+      queue:
+        enabled: true
+      parameters:
+        - name: catalog
+          default: ${var.catalog_in_use}
+      environments:
+        - environment_key: bronze_emp_environment
+          spec:
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED
