@@ -1,0 +1,13 @@
+resources:
+  pipelines:
+    medallion_etl:
+      name: medallion_etl
+      configuration:
+        catalog: ${var.catalog_in_use}
+      libraries:
+        - glob:
+            include: ../src/transformations/**
+      serverless: true
+      catalog: ${var.catalog_in_use}
+      schema: bronze
+      root_path: ../src/medallion_etl
