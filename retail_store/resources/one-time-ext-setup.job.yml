@@ -28,6 +28,16 @@ resources:
           notebook_task:
             notebook_path: ../src/notebooks/setup/01-schema-setup-stg.ipynb
             source: WORKSPACE
+        - task_key: run-ddl
+          depends_on:
+            - task_key: setup_ext_location_dev
+            - task_key: set_ext_location_stg
+          run_if: AT_LEAST_ONE_SUCCESS
+          sql_task:
+            file:
+              path: ../src/notebooks/setup/02-ddl-setup.sql
+              source: WORKSPACE
+            warehouse_id: ${var.sql_warehouse}
       queue:
         enabled: true
       parameters:
