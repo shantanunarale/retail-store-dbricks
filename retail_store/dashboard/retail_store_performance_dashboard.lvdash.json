@@ -1,0 +1,188 @@
+{
+  "datasets": [
+    {
+      "name": "52aa3000",
+      "displayName": "employees_per_store",
+      "queryLines": [
+        "SELECT StoreName,total_orders as total_employees FROM retail_store_dev.gold.employees_per_store"
+      ]
+    },
+    {
+      "name": "013c3480",
+      "displayName": "order_items_by_store",
+      "queryLines": [
+        "SELECT * FROM retail_store_dev.gold.order_items_by_store"
+      ]
+    },
+    {
+      "name": "7ae0d80e",
+      "displayName": "orders_by_store",
+      "queryLines": [
+        "SELECT * FROM retail_store_dev.gold.orders_by_store"
+      ]
+    },
+    {
+      "name": "fd6d71bb",
+      "displayName": "product_sales",
+      "queryLines": [
+        "SELECT * FROM retail_store_dev.gold.product_sales"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "7caa35ed",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "a20a2bb0",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "52aa3000",
+                  "fields": [
+                    {
+                      "name": "StoreName",
+                      "expression": "`StoreName`"
+                    },
+                    {
+                      "name": "total_employees",
+                      "expression": "`total_employees`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "StoreName",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_employees",
+                  "displayName": "Count Of Employees",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "5a8bb535",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "7ae0d80e",
+                  "fields": [
+                    {
+                      "name": "StoreName",
+                      "expression": "`StoreName`"
+                    },
+                    {
+                      "name": "total_orders",
+                      "expression": "`total_orders`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "StoreName",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_orders",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 1,
+            "width": 3,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
