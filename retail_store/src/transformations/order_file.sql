@@ -1,5 +1,5 @@
 CREATE OR REFRESH STREAMING TABLE silver.order_silver(
-  CONSTRAINT invalid_amount EXPECT (order_amount < 0)
+  CONSTRAINT invalid_amount EXPECT (order_amount < 1)
 );
 
 CREATE FLOW order_silver 
